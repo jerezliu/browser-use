@@ -1,6 +1,7 @@
 """Local browser watchdog for managing browser subprocess lifecycle."""
 
 import asyncio
+import os
 import shutil
 import tempfile
 from pathlib import Path
@@ -125,6 +126,10 @@ class LocalBrowserWatchdog(BaseWatchdog):
 					browser_path = await self._get_browser_path_via_subprocess()
 					self.logger.debug(f'[LocalBrowserWatchdog] Got browser path: {browser_path}')
 
+				# Log the full command for debugging
+				full_command = f'"{browser_path}" {" ".join(launch_args)}'
+				self.logger.debug(f'[LocalBrowserWatchdog] Launching browser with command: {full_command}')
+
 				# Launch browser subprocess directly
 				self.logger.debug(f'[LocalBrowserWatchdog] Launching browser subprocess with {len(launch_args)} args...')
 				subprocess = await asyncio.create_subprocess_exec(
@@ -137,6 +142,9 @@ class LocalBrowserWatchdog(BaseWatchdog):
 
 				# Convert to psutil.Process
 				process = psutil.Process(subprocess.pid)
+
+				# Start a background task to log browser output
+				asyncio.create_task(self._log_browser_output(subprocess))
 
 				# Wait for CDP to be ready and get the URL
 				cdp_url = await self._wait_for_cdp_url(debug_port)
@@ -258,12 +266,37 @@ asyncio.run(get_path())
 			port = s.getsockname()[1]
 		return port
 
+	async def _log_browser_output(self, subprocess: asyncio.subprocess.Process):
+		"""Log stdout and stderr from the browser process."""
+		try:
+			await asyncio.gather(
+				self._read_stream(subprocess.stdout, 'stdout'),
+				self._read_stream(subprocess.stderr, 'stderr'),
+			)
+		except Exception as e:
+			self.logger.error(f'[LocalBrowserWatchdog] Error logging browser output: {e}')
+
+	async def _read_stream(self, stream, name):
+		"""Read and log lines from a stream."""
+		if not stream:
+			return
+		while True:
+			line = await stream.readline()
+			if not line:
+				break
+			self.logger.debug(f'[Browser-{name}] {line.decode().strip()}')
+
 	@staticmethod
-	async def _wait_for_cdp_url(port: int, timeout: float = 30) -> str:
+	async def _wait_for_cdp_url(port: int, timeout: float | None = None) -> str:
 		"""Wait for the browser to start and return the CDP URL."""
 		import aiohttp
 
+		# Get timeout from environment variable, default to 30 seconds
+		if timeout is None:
+			timeout = int(os.getenv('BROWSER_USE_BROWSER_LAUNCH_TIMEOUT', 30))
+
 		start_time = asyncio.get_event_loop().time()
+		last_error = None
 
 		while asyncio.get_event_loop().time() - start_time < timeout:
 			try:
@@ -274,12 +307,14 @@ asyncio.run(get_path())
 							return f'http://localhost:{port}/'
 						else:
 							# Chrome is starting up and returning 502/500 errors
+							last_error = f'HTTP status {resp.status}'
 							await asyncio.sleep(0.1)
-			except Exception:
+			except Exception as e:
 				# Connection error - Chrome might not be ready yet
+				last_error = str(e)
 				await asyncio.sleep(0.1)
-
-		raise TimeoutError(f'Browser did not start within {timeout} seconds')
+		
+		raise TimeoutError(f'Browser did not start within {timeout} seconds. Last error: {last_error}')
 
 	@staticmethod
 	async def _cleanup_process(process: psutil.Process) -> None:
