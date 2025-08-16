@@ -20,7 +20,7 @@ llm = ChatOpenAI(
 )
 
 # Create a browser profile with the sandbox disabled for Docker
-browser_profile = BrowserProfile(chromium_sandbox=False)
+browser_profile = BrowserProfile(chromium_sandbox=False, headless=True)
 
 task = 'Go to google.com/travel/flights and find the cheapest flight from New York to Paris on 2025-07-15'
 agent = Agent(task=task, llm=llm, browser_profile=browser_profile)
