@@ -5,7 +5,7 @@ To test this locally, follow these steps:
 1. Create a shortcut for the executable Chrome file.
 2. Add the following argument to the shortcut:
    - On Windows: `--remote-debugging-port=9222`
-3. Open a web browser and navigate to `http://localhost:9222/json/version` to verify that the Remote Debugging Protocol (CDP) is running.
+3. Open a web browser and navigate to `http://127.0.0.1:9222/json/version` to verify that the Remote Debugging Protocol (CDP) is running.
 4. Launch this example.
 
 @dev You need to set the `GOOGLE_API_KEY` environment variable before proceeding.
@@ -34,7 +34,7 @@ browser_session = BrowserSession(
 	browser_profile=BrowserProfile(
 		headless=False,
 	),
-	cdp_url='http://localhost:9222',
+	cdp_url='http://127.0.0.1:9222',
 )
 controller = Controller()
 

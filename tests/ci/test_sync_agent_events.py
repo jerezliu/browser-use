@@ -396,7 +396,7 @@ class TestEventValidation:
 				user_id='0683fb03-c5da-79c9-8000-d3a39c47c650',
 				browser_session_id='test-browser',
 				browser_session_live_url='https://example.com',
-				browser_session_cdp_url='ws://localhost:9222',
+				browser_session_cdp_url='ws://127.0.0.1:9222',
 				device_id='test-device-id',
 			),
 			CreateAgentTaskEvent(

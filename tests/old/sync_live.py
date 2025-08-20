@@ -81,7 +81,7 @@
 # 	"""
 
 # 	# Configuration
-# 	backend_url = os.getenv('BROWSER_USE_CLOUD_API_URL', 'http://localhost:8000')
+# 	backend_url = os.getenv('BROWSER_USE_CLOUD_API_URL', 'http://127.0.0.1:8000')
 # 	logger.info(f'Running live integration test against: {backend_url}')
 
 # 	# Create mock LLM
@@ -147,7 +147,7 @@
 # 	This is a simpler test that just verifies event sending works.
 # 	"""
 
-# 	backend_url = os.getenv('BROWSER_USE_CLOUD_API_URL', 'http://localhost:8000')
+# 	backend_url = os.getenv('BROWSER_USE_CLOUD_API_URL', 'http://127.0.0.1:8000')
 # 	logger.info(f'Testing cloud sync against: {backend_url}')
 
 # 	# Create cloud sync service
@@ -165,7 +165,7 @@
 # 		id=str(uuid4()),
 # 		browser_session_id=str(uuid4()),
 # 		browser_session_live_url='https://example.com',
-# 		browser_session_cdp_url='ws://localhost:9222',
+# 		browser_session_cdp_url='ws://127.0.0.1:9222',
 # 		browser_state={'test': 'live_integration'},
 # 		is_source_api=True,
 # 	)

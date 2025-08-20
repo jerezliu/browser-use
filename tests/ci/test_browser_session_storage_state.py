@@ -194,13 +194,13 @@ class TestBrowserSessionStorageState:
 		# Should start without errors
 		await session.start()
 
-		# Should have no cookies from localhost (our test domain)
+		# Should have no cookies from 127.0.0.1 (our test domain)
 		# Note: Browser may have cookies from default pages like Google's new tab page
 		context = session.browser_context
 		assert context is not None
 		cookies = await context.cookies()
-		localhost_cookies = [c for c in cookies if c.get('domain', '') in ['127.0.0.1', '.127.0.0.1']]
-		assert len(localhost_cookies) == 0, f'Expected no 127.0.0.1 cookies, but found: {localhost_cookies}'
+		127.0.0.1_cookies = [c for c in cookies if c.get('domain', '') in ['127.0.0.1', '.127.0.0.1']]
+		assert len(127.0.0.1_cookies) == 0, f'Expected no 127.0.0.1 cookies, but found: {127.0.0.1_cookies}'
 
 		await session.kill()
 
@@ -216,13 +216,13 @@ class TestBrowserSessionStorageState:
 		# Should start without errors (warning logged)
 		await session.kill()
 
-		# Should have no cookies from localhost (our test domain)
+		# Should have no cookies from 127.0.0.1 (our test domain)
 		# Note: Browser may have cookies from default pages like Google's new tab page
 		context = session.browser_context
 		assert context is not None
 		cookies = await context.cookies()
-		localhost_cookies = [c for c in cookies if c.get('domain', '') in ['127.0.0.1', '.127.0.0.1']]
-		assert len(localhost_cookies) == 0, f'Expected no 127.0.0.1 cookies, but found: {localhost_cookies}'
+		127.0.0.1_cookies = [c for c in cookies if c.get('domain', '') in ['127.0.0.1', '.127.0.0.1']]
+		assert len(127.0.0.1_cookies) == 0, f'Expected no 127.0.0.1 cookies, but found: {127.0.0.1_cookies}'
 
 		await session.kill()
 

@@ -601,7 +601,7 @@ class TestFileSystem:
 			fs = FileSystem(base_dir=tmp_dir, create_default_files=True)
 
 			# Write JSON configuration file
-			config_json = '{"app": {"name": "TestApp", "version": "1.0"}, "database": {"host": "localhost", "port": 5432}}'
+			config_json = '{"app": {"name": "TestApp", "version": "1.0"}, "database": {"host": "127.0.0.1", "port": 5432}}'
 			await fs.write_file('config.json', config_json)
 
 			# Write CSV data file
@@ -612,7 +612,7 @@ class TestFileSystem:
 			await fs.append_file('users.csv', '\n3,Bob Johnson,bob@example.com,35')
 
 			# Update JSON configuration
-			updated_config = '{"app": {"name": "TestApp", "version": "1.1"}, "database": {"host": "localhost", "port": 5432}, "features": {"logging": true}}'
+			updated_config = '{"app": {"name": "TestApp", "version": "1.1"}, "database": {"host": "127.0.0.1", "port": 5432}, "features": {"logging": true}}'
 			await fs.write_file('config.json', updated_config)
 
 			# Create another JSON file for API responses

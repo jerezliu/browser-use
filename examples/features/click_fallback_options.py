@@ -159,9 +159,9 @@ async def run_http_server():
 	app.router.add_get('/', handle_root)
 	runner = web.AppRunner(app)
 	await runner.setup()
-	site = web.TCPSite(runner, 'localhost', 8000)
+	site = web.TCPSite(runner, '127.0.0.1', 8000)
 	await site.start()
-	print('HTTP server running on http://localhost:8000')
+	print('HTTP server running on http://127.0.0.1:8000')
 	# Keep the server running indefinitely.
 	await asyncio.Event().wait()
 
@@ -175,11 +175,11 @@ async def main():
 	server_task = asyncio.create_task(run_http_server())
 
 	# Example tasks for the agent.
-	xpath_task = 'Open http://localhost:8000/, click element with the xpath "/html/body/div/div[1]" and then click on Oranges'
-	css_selector_task = 'Open http://localhost:8000/, click element with the selector div.select-display and then click on apples'
-	text_task = 'Open http://localhost:8000/, click the third element with the text "Select a fruit" and then click on Apples, then click the second element with the text "Select a fruit" and then click on Oranges'
-	select_task = 'Open http://localhost:8000/, choose the car BMW'
-	button_task = 'Open http://localhost:8000/, click on the button'
+	xpath_task = 'Open http://127.0.0.1:8000/, click element with the xpath "/html/body/div/div[1]" and then click on Oranges'
+	css_selector_task = 'Open http://127.0.0.1:8000/, click element with the selector div.select-display and then click on apples'
+	text_task = 'Open http://127.0.0.1:8000/, click the third element with the text "Select a fruit" and then click on Apples, then click the second element with the text "Select a fruit" and then click on Oranges'
+	select_task = 'Open http://127.0.0.1:8000/, choose the car BMW'
+	button_task = 'Open http://127.0.0.1:8000/, click on the button'
 
 	llm = ChatOpenAI(model='gpt-4.1')
 	# llm = ChatGoogleGenerativeAI(

@@ -53,7 +53,7 @@ WSS URL of the playwright-protocol browser server to connect to. See here for [W
 cdp_url: str | None = None
 ```
 
-CDP URL of the browser to connect to (e.g. `http://localhost:9222`). See here for [CDP connection instructions](https://docs.browser-use.com/customize/real-browser#method-e%3A-connect-to-remote-browser-via-cdp-url).
+CDP URL of the browser to connect to (e.g. `http://127.0.0.1:9222`). See here for [CDP connection instructions](https://docs.browser-use.com/customize/real-browser#method-e%3A-connect-to-remote-browser-via-cdp-url).
 
 #### `browser_pid`
 
@@ -61,7 +61,7 @@ CDP URL of the browser to connect to (e.g. `http://localhost:9222`). See here fo
 browser_pid: int | None = None
 ```
 
-PID of a running chromium-based browser process to connect to on localhost. See here for [connection via pid](https://docs.browser-use.com/customize/real-browser#method-c%3A-connect-to-local-browser-using-browser-pid) instructions.
+PID of a running chromium-based browser process to connect to on 127.0.0.1. See here for [connection via pid](https://docs.browser-use.com/customize/real-browser#method-c%3A-connect-to-local-browser-using-browser-pid) instructions.
 
 <Note>
   For web scraping tasks on sites that restrict automated access, we recommend

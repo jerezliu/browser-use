@@ -547,12 +547,12 @@ class TestCloudSync:
 	# async def test_update_wal_events(self, temp_config_dir):
 	# 	"""Test updating WAL events with real user ID."""
 	# 	# Create real auth client
-	# 	auth = DeviceAuthClient(base_url='http://localhost:8000')
+	# 	auth = DeviceAuthClient(base_url='http://127.0.0.1:8000')
 	# 	auth.auth_config.api_token = 'test-api-key'
 	# 	auth.auth_config.user_id = 'test-user-123'
 
 	# 	service = CloudSync(
-	# 		base_url='http://localhost:8000',
+	# 		base_url='http://127.0.0.1:8000',
 	# 		enable_auth=True,
 	# 	)
 	# 	service.auth_client = auth

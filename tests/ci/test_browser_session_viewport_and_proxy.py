@@ -7,18 +7,18 @@ async def test_proxy_settings_pydantic_model():
 	Test that ProxySettings as a Pydantic model is correctly converted to a dictionary when used.
 	"""
 	# Create ProxySettings with Pydantic model
-	proxy_settings = dict(server='http://example.proxy:8080', bypass='localhost', username='testuser', password='testpass')
+	proxy_settings = dict(server='http://example.proxy:8080', bypass='127.0.0.1', username='testuser', password='testpass')
 
 	# Verify the model has correct dict-like access
 	assert proxy_settings['server'] == 'http://example.proxy:8080'
-	assert proxy_settings.get('bypass') == 'localhost'
+	assert proxy_settings.get('bypass') == '127.0.0.1'
 	assert proxy_settings.get('nonexistent', 'default') == 'default'
 
 	# Verify model_dump works correctly
 	proxy_dict = dict(proxy_settings)
 	assert isinstance(proxy_dict, dict)
 	assert proxy_dict['server'] == 'http://example.proxy:8080'
-	assert proxy_dict['bypass'] == 'localhost'
+	assert proxy_dict['bypass'] == '127.0.0.1'
 	assert proxy_dict['username'] == 'testuser'
 	assert proxy_dict['password'] == 'testpass'
 
@@ -119,7 +119,7 @@ async def test_proxy_with_real_browser():
 	"""
 	# Create proxy settings with a fake proxy server
 	proxy_settings = ProxySettings(
-		server='http://non.existent.proxy:9999', bypass='localhost', username='testuser', password='testpass'
+		server='http://non.existent.proxy:9999', bypass='127.0.0.1', username='testuser', password='testpass'
 	)
 
 	# Test model serialization

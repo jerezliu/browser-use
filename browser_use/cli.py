@@ -1572,7 +1572,7 @@ async def textual_interface(config: dict[str, Any]):
 	'--user-data-dir', type=str, help='Path to Chrome user data directory (e.g. ~/Library/Application Support/Google/Chrome)'
 )
 @click.option('--profile-directory', type=str, help='Chrome profile directory name (e.g. "Default", "Profile 1")')
-@click.option('--cdp-url', type=str, help='Connect to existing Chrome via CDP URL (e.g. http://localhost:9222)')
+@click.option('--cdp-url', type=str, help='Connect to existing Chrome via CDP URL (e.g. http://127.0.0.1:9222)')
 @click.option('-p', '--prompt', type=str, help='Run a single task without the TUI (headless mode)')
 @click.option('--mcp', is_flag=True, help='Run as MCP server (exposes JSON RPC via stdin/stdout)')
 @click.pass_context

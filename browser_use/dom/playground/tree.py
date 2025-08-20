@@ -25,7 +25,7 @@ async def main():
 		),
 	)
 	# async with httpx.AsyncClient() as client:
-	# 	version_info = await client.get('http://localhost:9222/json/version')
+	# 	version_info = await client.get('http://127.0.0.1:9222/json/version')
 	# 	browser.cdp_url = version_info.json()['webSocketDebuggerUrl']
 
 	# if not browser.cdp_url:

@@ -7,7 +7,7 @@ from browser_use.browser.types import async_playwright
 
 async def test_connection_via_cdp():
 	browser_session = BrowserSession(
-		cdp_url='http://localhost:9898',
+		cdp_url='http://127.0.0.1:9898',
 		browser_profile=BrowserProfile(
 			headless=True,
 			keep_alive=True,

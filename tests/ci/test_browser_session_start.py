@@ -138,7 +138,7 @@ class TestBrowserSessionStart:
 		# Create session with invalid CDP URL
 		browser_session = BrowserSession(
 			browser_profile=BrowserProfile(headless=True),
-			cdp_url='http://localhost:99999',  # Invalid port
+			cdp_url='http://127.0.0.1:99999',  # Invalid port
 		)
 
 		try:
@@ -842,10 +842,10 @@ class TestBrowserSessionReusePatterns:
 			agent2 = Agent(task='Second agent task...', llm=mock_llm, browser_session=window2, enable_memory=False)
 
 			# Navigate to pages that set cookies
-			# Use 127.0.0.1 instead of localhost for cookie persistence
+			# Use 127.0.0.1 instead of 127.0.0.1 for cookie persistence
 			base_url = httpserver.url_for('/')
-			if 'localhost' in base_url:
-				base_url = base_url.replace('localhost', '127.0.0.1')
+			if '127.0.0.1' in base_url:
+				base_url = base_url.replace('127.0.0.1', '127.0.0.1')
 
 			await window1.navigate_to(base_url.rstrip('/') + '/set-cookies')
 			await window2.navigate_to(base_url.rstrip('/') + '/page2')
@@ -1089,7 +1089,7 @@ class TestBrowserSessionEventSystem:
 		# Create session with invalid CDP URL to trigger error
 		error_session = BrowserSession(
 			browser_profile=BrowserProfile(headless=True),
-			cdp_url='http://localhost:99999',  # Invalid port
+			cdp_url='http://127.0.0.1:99999',  # Invalid port
 		)
 
 		try:

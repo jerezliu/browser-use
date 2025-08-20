@@ -38,9 +38,9 @@ class TestCloudSyncInit:
 
 	async def test_init_with_auth_enabled(self, temp_config_dir):
 		"""Test CloudSync initialization with auth enabled."""
-		service = CloudSync(enable_auth=True, base_url='http://localhost:8000')
+		service = CloudSync(enable_auth=True, base_url='http://127.0.0.1:8000')
 
-		assert service.base_url == 'http://localhost:8000'
+		assert service.base_url == 'http://127.0.0.1:8000'
 		assert service.enable_auth is True
 		assert service.auth_client is not None
 		assert isinstance(service.auth_client, DeviceAuthClient)
@@ -49,9 +49,9 @@ class TestCloudSyncInit:
 
 	async def test_init_with_auth_disabled(self, temp_config_dir):
 		"""Test CloudSync initialization with auth disabled."""
-		service = CloudSync(enable_auth=False, base_url='http://localhost:8000')
+		service = CloudSync(enable_auth=False, base_url='http://127.0.0.1:8000')
 
-		assert service.base_url == 'http://localhost:8000'
+		assert service.base_url == 'http://127.0.0.1:8000'
 		assert service.enable_auth is False
 		assert service.auth_client is None
 		assert service.pending_events == []
@@ -272,7 +272,7 @@ class TestCloudSyncRetryLogic:
 	async def test_network_error_resilience(self, sync_with_auth):
 		"""Test resilience to network errors."""
 		# No server running - will get connection error
-		sync_with_auth.base_url = 'http://localhost:99999'  # Invalid port
+		sync_with_auth.base_url = 'http://127.0.0.1:99999'  # Invalid port
 
 		# Should not raise exception
 		await sync_with_auth.handle_event(

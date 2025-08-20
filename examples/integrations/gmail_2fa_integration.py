@@ -189,7 +189,7 @@ class GmailGrantManager:
 		print('\n🔧 Manual troubleshooting steps:')
 		print('1. Check that Gmail API is enabled in Google Cloud Console')
 		print('2. Verify OAuth consent screen is configured')
-		print('3. Ensure redirect URIs include http://localhost:8080')
+		print('3. Ensure redirect URIs include http://127.0.0.1:8080')
 		print('4. Check if credentials file is for the correct project')
 		print('5. Try regenerating OAuth credentials in Google Cloud Console')
 
